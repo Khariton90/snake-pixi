@@ -113,7 +113,7 @@ body {
 	background: var(--snake-color);
 	opacity: 0.7;
 	width: 100%;
-	padding: 20px;
+	padding: 10px;
 }
 
 .button {
@@ -125,12 +125,42 @@ body {
 	text-transform: uppercase;
 	font-size: 20px;
 	cursor: pointer;
-	width: 200px;
+	min-width: 200px;
 	border: 2px solid var(--cell-dark-color);
 	box-shadow: 0px 0px 4px var(--snake-color);
 
 	&:active,
 	&:focus {
 		outline: none;
+	}
+}
+
+.dialog {
+	width: 400px;
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	border: 2px solid var(--cell-light-color);
+	background: linear-gradient(45deg, var(--bg-color), var(--cell-light-color));
+	color: #fff;
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
+.dialog-title,
+.dialog-score {
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.link {
+	color: inherit;
+	text-decoration: none;
+	&:hover {
+		opacity: 0.7;
 	}
 }
