@@ -1,1 +1,1 @@
-export const TIMER = 250
+export const TIMER = 200

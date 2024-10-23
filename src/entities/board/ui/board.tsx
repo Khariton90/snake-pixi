@@ -1,7 +1,7 @@
 import { RowBoard } from '@/entities/row-board'
 import { BOARD_CENTER, BOARD_MATRIX, TIMER } from '@/shared/consts'
 import { setEatRandomPosition, gameLoop } from '@/shared/lib/game-loop'
-import { Direction } from '@/shared/types'
+import { Direction, Status } from '@/shared/types'
 import { useState, useCallback, useEffect } from 'react'
 
 const inverseDirection = {
@@ -11,7 +11,11 @@ const inverseDirection = {
 	[Direction.Right]: Direction.Left,
 }
 
-export function Board() {
+type BoardProps = {
+	status: Status
+}
+
+export function Board({ status }: BoardProps) {
 	const [snake, setSnake] = useState([[BOARD_CENTER, BOARD_CENTER]])
 	const [direction, setDirection] = useState(Direction.Bottom)
 	const [eat, setEat] = useState([0, 0])
@@ -50,12 +54,14 @@ export function Board() {
 			setEat(setEatRandomPosition())
 		}
 
-		const timer = setTimeout(() => {
-			setSnake(newSnake)
-		}, TIMER)
+		if (status === Status.Playing) {
+			const timer = setTimeout(() => {
+				setSnake(newSnake)
+			}, TIMER)
 
-		return () => clearInterval(timer)
-	}, [direction, eat, eatFood, snake])
+			return () => clearInterval(timer)
+		}
+	}, [snake, status])
 
 	return (
 		<>

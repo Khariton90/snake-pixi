@@ -23,6 +23,11 @@ body {
 
 .wrapper {
 	padding: 20px 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
 }
 
 .board {
@@ -109,4 +114,23 @@ body {
 	opacity: 0.7;
 	width: 100%;
 	padding: 20px;
+}
+
+.button {
+	padding: 10px 40px;
+	border-radius: 6px;
+	border: 1px solid var(--cell-dark-color);
+	background-color: var(--cell-light-color);
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 20px;
+	cursor: pointer;
+	width: 200px;
+	border: 2px solid var(--cell-dark-color);
+	box-shadow: 0px 0px 4px var(--snake-color);
+
+	&:active,
+	&:focus {
+		outline: none;
+	}
 }
