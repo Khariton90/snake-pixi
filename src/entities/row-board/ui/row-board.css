@@ -1,0 +1,58 @@
+.row {
+	display: flex;
+	gap: 2px;
+	padding: 1px;
+
+	& .col {
+		width: var(--cell-size);
+		height: var(--cell-size);
+		border-radius: 2px;
+	}
+
+	&:nth-child(odd) .col {
+		&:nth-child(odd) {
+			background-color: var(--cell-light-color);
+		}
+
+		&:nth-child(even) {
+			background-color: var(--cell-dark-color);
+		}
+	}
+
+	&:nth-child(even) .col {
+		&:nth-child(odd) {
+			background-color: var(--cell-dark-color);
+		}
+
+		&:nth-child(even) {
+			background-color: var(--cell-light-color);
+		}
+	}
+
+	& .eat {
+		position: relative;
+		&::before {
+			content: url(@/shared/assets/apple.svg);
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: var(--cell-size);
+			height: var(--cell-size);
+			border-radius: 50%;
+		}
+	}
+
+	& .snake {
+		position: relative;
+		&::before {
+			content: '';
+			position: absolute;
+			left: -2px;
+			top: -2px;
+			width: var(--snake-cell-size);
+			height: var(--snake-cell-size);
+			background-color: var(--snake-color);
+			z-index: 1;
+		}
+	}
+}

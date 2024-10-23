@@ -1,0 +1,10 @@
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	background: var(--snake-color);
+	opacity: 0.7;
+	width: 100%;
+	padding: 10px;
+}

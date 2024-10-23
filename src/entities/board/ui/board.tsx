@@ -9,6 +9,7 @@ import {
 import { setEatRandomPosition, gameLoop } from '@/shared/lib/game-loop'
 import { Direction, Status } from '@/shared/types'
 import { useState, useCallback, useEffect } from 'react'
+import styles from './board.module.css'
 
 const inverseDirection = {
 	[Direction.Bottom]: Direction.Top,
@@ -26,6 +27,7 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 	const [snake, setSnake] = useState(INITIAL_SNAKE)
 	const [direction, setDirection] = useState(Direction.Bottom)
 	const [eat, setEat] = useState([0, 0])
+
 	const eatFood = useCallback(() => {
 		const [x, y] = snake[snake.length - 1]
 		return eat[0] === x && eat[1] === y
@@ -93,12 +95,14 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 	const score = snake.length - START_LENGTH_SNAKE
 
 	return (
-		<>
-			{status === Status.Stop ? (
-				<Dialog status={status} setGameAgain={setGameAgain} score={score} />
-			) : null}
-			<h2 className='score'>Score: {score}</h2>
-			<div className='board'>
+		<main className='main'>
+			<Dialog status={status} setGameAgain={setGameAgain} score={score} />
+			<div className={styles.boardHeader}>
+				<span className={styles.score}>
+					<b>Очки: {score} </b>
+				</span>
+			</div>
+			<div className={styles.board}>
 				{BOARD_MATRIX.map((row, rowIdx) => (
 					<RowBoard
 						eat={eat}
@@ -109,6 +113,6 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 					/>
 				))}
 			</div>
-		</>
+		</main>
 	)
 }

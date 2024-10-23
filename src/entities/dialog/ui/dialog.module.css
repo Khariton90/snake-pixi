@@ -1,0 +1,21 @@
+.dialog {
+	width: 400px;
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	border: 2px solid var(--cell-light-color);
+	background: linear-gradient(45deg, var(--bg-color), var(--cell-light-color));
+	color: #fff;
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
+.dialogTitle,
+.dialogScore {
+	margin: 0;
+	text-transform: uppercase;
+}

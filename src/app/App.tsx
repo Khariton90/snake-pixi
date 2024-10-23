@@ -3,6 +3,7 @@ import './styles/index.css'
 import { useState } from 'react'
 import { Status } from '@/shared/types'
 import { StatusButton } from '@/entities/status-button'
+import { Footer } from '@/shared/ui'
 
 function App(): JSX.Element {
 	const [gameStatus, setGameStatus] = useState(Status.Paused)
@@ -13,19 +14,9 @@ function App(): JSX.Element {
 
 	return (
 		<div className='wrapper'>
-			<main className='main'>
-				<Board status={gameStatus} onChangeStatus={onChangeStatus} />
-			</main>
+			<Board status={gameStatus} onChangeStatus={onChangeStatus} />
 			<StatusButton status={gameStatus} onChangeStatus={onChangeStatus} />
-			<footer className='footer'>
-				<a
-					className='link'
-					href='https://github.com/Khariton90'
-					target='_blank'
-				>
-					Разработал Khariton90
-				</a>
-			</footer>
+			<Footer />
 		</div>
 	)
 }

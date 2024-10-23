@@ -7,18 +7,18 @@
 	--snake-cell-size: 38px;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	min-height: 100vh;
 	display: flex;
 	justify-content: center;
-	background: url('/src/shared/assets/bg-1440.webp') center center no-repeat;
+	background: url('@/shared/assets/bg-1440.webp') center center no-repeat;
 	background-size: cover;
 	font-family: Arial, Helvetica, sans-serif;
-}
-
-* {
-	box-sizing: border-box;
 }
 
 .wrapper {
@@ -28,92 +28,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-}
-
-.board {
-	display: inline-flex;
-	flex-direction: column;
-	background-color: var(--bg-color);
-	border-radius: 6px;
-	padding: 6px;
-}
-
-.row {
-	display: flex;
-	gap: 2px;
-	padding: 1px;
-
-	& .col {
-		width: var(--cell-size);
-		height: var(--cell-size);
-		border-radius: 2px;
-	}
-
-	&:nth-child(odd) .col {
-		&:nth-child(odd) {
-			background-color: var(--cell-light-color);
-		}
-
-		&:nth-child(even) {
-			background-color: var(--cell-dark-color);
-		}
-	}
-
-	&:nth-child(even) .col {
-		&:nth-child(odd) {
-			background-color: var(--cell-dark-color);
-		}
-
-		&:nth-child(even) {
-			background-color: var(--cell-light-color);
-		}
-	}
-
-	& .eat {
-		position: relative;
-		&::before {
-			content: url(@/shared/assets/apple.svg);
-			position: absolute;
-			left: 0px;
-			top: 0px;
-			width: var(--cell-size);
-			height: var(--cell-size);
-			border-radius: 50%;
-		}
-	}
-
-	& .snake {
-		position: relative;
-		&::before {
-			content: '';
-			position: absolute;
-			left: -2px;
-			top: -2px;
-			width: var(--snake-cell-size);
-			height: var(--snake-cell-size);
-			background-color: var(--snake-color);
-			z-index: 1;
-		}
-	}
-}
-
-.score {
-	margin: 0;
-	font-size: 40px;
-	color: var(--bg-color);
-	text-shadow: 0px 0px 3px var(--snake-color);
-	text-align: center;
-}
-
-.footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	text-align: center;
-	background: var(--snake-color);
-	opacity: 0.7;
-	width: 100%;
-	padding: 10px;
 }
 
 .button {
@@ -133,28 +47,6 @@ body {
 	&:focus {
 		outline: none;
 	}
-}
-
-.dialog {
-	width: 400px;
-	height: 400px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 10px;
-	border: 2px solid var(--cell-light-color);
-	background: linear-gradient(45deg, var(--bg-color), var(--cell-light-color));
-	color: #fff;
-	&::backdrop {
-		background-color: rgba(0, 0, 0, 0.8);
-	}
-}
-
-.dialog-title,
-.dialog-score {
-	margin: 0;
-	text-transform: uppercase;
 }
 
 .link {
