@@ -1,0 +1,112 @@
+:root {
+	--bg-color: #07461f;
+	--snake-color: #cdfa51;
+	--cell-light-color: #58a028;
+	--cell-dark-color: #499119;
+	--cell-size: 34px;
+	--snake-cell-size: 38px;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	background: url('/src/shared/assets/bg-1440.webp') center center no-repeat;
+	background-size: cover;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.wrapper {
+	padding: 20px 10px;
+}
+
+.board {
+	display: inline-flex;
+	flex-direction: column;
+	background-color: var(--bg-color);
+	border-radius: 6px;
+	padding: 6px;
+}
+
+.row {
+	display: flex;
+	gap: 2px;
+	padding: 1px;
+
+	& .col {
+		width: var(--cell-size);
+		height: var(--cell-size);
+		border-radius: 2px;
+	}
+
+	&:nth-child(odd) .col {
+		&:nth-child(odd) {
+			background-color: var(--cell-light-color);
+		}
+
+		&:nth-child(even) {
+			background-color: var(--cell-dark-color);
+		}
+	}
+
+	&:nth-child(even) .col {
+		&:nth-child(odd) {
+			background-color: var(--cell-dark-color);
+		}
+
+		&:nth-child(even) {
+			background-color: var(--cell-light-color);
+		}
+	}
+
+	& .eat {
+		position: relative;
+		&::before {
+			content: url(@/shared/assets/apple.svg);
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: var(--cell-size);
+			height: var(--cell-size);
+			border-radius: 50%;
+		}
+	}
+
+	& .snake {
+		position: relative;
+		&::before {
+			content: '';
+			position: absolute;
+			left: -2px;
+			top: -2px;
+			width: var(--snake-cell-size);
+			height: var(--snake-cell-size);
+			background-color: var(--snake-color);
+			z-index: 1;
+		}
+	}
+}
+
+.score {
+	margin: 0;
+	font-size: 40px;
+	color: var(--bg-color);
+	text-shadow: 0px 0px 3px var(--snake-color);
+	text-align: center;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	background: var(--snake-color);
+	opacity: 0.7;
+	width: 100%;
+	padding: 20px;
+}
