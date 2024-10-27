@@ -1,10 +1,11 @@
+@import url('./mobile.css') screen and (max-width: 720px);
+@import url('./desktop.css') screen and (min-width: 721px);
+
 :root {
 	--bg-color: #07461f;
-	--snake-color: #cdfa51;
+	--snake-color: #0cf17f;
 	--cell-light-color: #58a028;
 	--cell-dark-color: #499119;
-	--cell-size: 24px;
-	--snake-cell-size: 28px;
 }
 
 * {
@@ -55,4 +56,9 @@ body {
 	&:hover {
 		opacity: 0.7;
 	}
+}
+
+.apple {
+	width: var(--cell-size);
+	height: var(--cell-size);
 }

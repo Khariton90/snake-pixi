@@ -5,10 +5,10 @@
 	padding: 6px;
 }
 
-.score,
-.best-score {
+.score {
 	margin: 0;
-	font-size: 30px;
+	font-size: 1.5rem;
 	color: var(--bg-color);
 	text-shadow: 0px 0px 3px var(--snake-color);
+	text-transform: uppercase;
 }

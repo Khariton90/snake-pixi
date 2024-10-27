@@ -1,4 +1,5 @@
 import { BOARD_SIZE } from '../consts/board.const'
+import { START_LENGTH_SNAKE } from '../consts/snake.const'
 import { Direction, Snake } from '../types'
 
 export function backSnakeToBoard(obj: { x: number; y: number }) {
@@ -97,4 +98,14 @@ export function setRandomPosition(snake: Snake) {
 export function eatFood(snake: Snake, eat: number[]) {
 	const [x, y] = snake[snake.length - 1]
 	return eat[0] === x && eat[1] === y
+}
+
+export function getCollisionWithTail(snake: Snake): boolean {
+	if (snake.length <= START_LENGTH_SNAKE) {
+		return false
+	}
+
+	const lastIndex = snake.length - 1
+	const [headX, headY] = snake[lastIndex]
+	return snake.slice(0, lastIndex).some(([x, y]) => headX === x && headY === y)
 }
