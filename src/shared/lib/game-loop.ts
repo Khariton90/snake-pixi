@@ -77,9 +77,19 @@ export function gameLoop(
 	return [newSnake, eat]
 }
 
-export function setEatRandomPosition() {
-	return [
+export function setRandomPosition(snake: number[][]) {
+	const randomPos = [
 		Math.floor(Math.random() * BOARD_SIZE),
 		Math.floor(Math.random() * BOARD_SIZE),
 	]
+
+	const collision = snake.find(
+		([x, y]) => x === randomPos[0] && y === randomPos[1]
+	)
+
+	if (collision) {
+		return setRandomPosition(snake)
+	}
+
+	return randomPos
 }

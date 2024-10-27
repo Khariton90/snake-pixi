@@ -3,8 +3,8 @@
 	--snake-color: #cdfa51;
 	--cell-light-color: #58a028;
 	--cell-dark-color: #499119;
-	--cell-size: 34px;
-	--snake-cell-size: 38px;
+	--cell-size: 24px;
+	--snake-cell-size: 28px;
 }
 
 * {

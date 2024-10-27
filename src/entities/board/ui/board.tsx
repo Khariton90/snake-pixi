@@ -3,20 +3,14 @@ import { RowBoard } from '@/entities/row-board'
 import {
 	BOARD_MATRIX,
 	INITIAL_SNAKE,
+	InverseDirection,
 	START_LENGTH_SNAKE,
 	TIMER,
 } from '@/shared/consts'
-import { setEatRandomPosition, gameLoop } from '@/shared/lib/game-loop'
+import { setRandomPosition, gameLoop } from '@/shared/lib/game-loop'
 import { Direction, Status } from '@/shared/types'
 import { useState, useCallback, useEffect } from 'react'
 import styles from './board.module.css'
-
-const inverseDirection = {
-	[Direction.Bottom]: Direction.Top,
-	[Direction.Top]: Direction.Bottom,
-	[Direction.Left]: Direction.Right,
-	[Direction.Right]: Direction.Left,
-}
 
 type BoardProps = {
 	status: Status
@@ -37,7 +31,7 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 		(evt: KeyboardEvent) => {
 			const code = evt.code as Direction
 
-			if (inverseDirection[code] === direction) {
+			if (InverseDirection[code] === direction) {
 				return
 			}
 			setDirection(() => code)
@@ -49,12 +43,12 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 		if (snake.length <= START_LENGTH_SNAKE) {
 			return
 		}
-		const lastIndex = snake.length - 1
-		const snakeHead = snake[lastIndex]
 
+		const lastIndex = snake.length - 1
+		const [headX, headY] = snake[lastIndex]
 		const collision = snake
 			.slice(0, lastIndex)
-			.some(([x, y]) => snakeHead[0] === x && snakeHead[1] === y)
+			.some(([x, y]) => headX === x && headY === y)
 
 		if (collision) {
 			onChangeStatus(Status.Stop)
@@ -68,7 +62,7 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 	}
 
 	useEffect(() => {
-		setEat(setEatRandomPosition())
+		setEat(setRandomPosition(snake))
 	}, [])
 
 	useEffect(() => {
@@ -79,8 +73,9 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 	useEffect(() => {
 		const [newSnake] = gameLoop(snake, eat, direction)
 		setGameOver(newSnake)
+
 		if (eatFood()) {
-			setEat(setEatRandomPosition())
+			setEat(setRandomPosition(snake))
 		}
 
 		if (status === Status.Playing) {
