@@ -1,5 +1,5 @@
 import { BOARD_SIZE } from '../consts/board.const'
-import { Direction } from '../types'
+import { Direction, Snake } from '../types'
 
 export function backSnakeToBoard(obj: { x: number; y: number }) {
 	const newObj = { ...obj }
@@ -51,10 +51,10 @@ export function setMovement(
 }
 
 export function gameLoop(
-	snake: number[][],
+	snake: Snake,
 	eat: number[],
 	movement: Direction
-): [number[][], number[]] {
+): [Snake, number[]] {
 	const head = snake[snake.length - 1]
 	const newSnake = snake.slice()
 
@@ -77,7 +77,7 @@ export function gameLoop(
 	return [newSnake, eat]
 }
 
-export function setRandomPosition(snake: number[][]) {
+export function setRandomPosition(snake: Snake) {
 	const randomPos = [
 		Math.floor(Math.random() * BOARD_SIZE),
 		Math.floor(Math.random() * BOARD_SIZE),
@@ -92,4 +92,9 @@ export function setRandomPosition(snake: number[][]) {
 	}
 
 	return randomPos
+}
+
+export function eatFood(snake: Snake, eat: number[]) {
+	const [x, y] = snake[snake.length - 1]
+	return eat[0] === x && eat[1] === y
 }

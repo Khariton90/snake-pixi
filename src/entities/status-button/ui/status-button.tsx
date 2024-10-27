@@ -1,10 +1,5 @@
+import { StatusTitle } from '@/shared/consts'
 import { Status } from '@/shared/types'
-
-const StatusTitle = {
-	[Status.Paused]: 'Пауза',
-	[Status.Playing]: 'Играть',
-	[Status.Stop]: 'Начать снова',
-}
 
 type ButtonProps = {
 	status: Status

@@ -1,5 +1,3 @@
-import { Dialog } from '@/entities/dialog'
-import { RowBoard } from '@/entities/row-board'
 import {
 	BOARD_MATRIX,
 	INITIAL_SNAKE,
@@ -7,9 +5,12 @@ import {
 	START_LENGTH_SNAKE,
 	TIMER,
 } from '@/shared/consts'
-import { setRandomPosition, gameLoop } from '@/shared/lib/game-loop'
-import { Direction, Status } from '@/shared/types'
+import { Dialog } from '@/entities/dialog'
+import { RowBoard } from '@/entities/row-board'
+import { setRandomPosition, gameLoop, eatFood } from '@/shared/lib/game-loop'
+import { Direction, Snake, Status } from '@/shared/types'
 import { useState, useCallback, useEffect } from 'react'
+import { BoardHeader } from '@/entities/board-header'
 import styles from './board.module.css'
 
 type BoardProps = {
@@ -20,50 +21,51 @@ type BoardProps = {
 export function Board({ status, onChangeStatus }: BoardProps) {
 	const [snake, setSnake] = useState(INITIAL_SNAKE)
 	const [direction, setDirection] = useState(Direction.Bottom)
-	const [eat, setEat] = useState([0, 0])
-
-	const eatFood = useCallback(() => {
-		const [x, y] = snake[snake.length - 1]
-		return eat[0] === x && eat[1] === y
-	}, [eat, snake])
+	const [eat, setEat] = useState(setRandomPosition(snake))
+	const [isKeyDown, setIsKeyDown] = useState(false)
 
 	const changeDirection = useCallback(
 		(evt: KeyboardEvent) => {
-			const code = evt.code as Direction
+			const code = Object.values(Direction).find(
+				element => element === evt.code
+			)
 
-			if (InverseDirection[code] === direction) {
-				return
+			if (!code) {
+				return null
 			}
-			setDirection(() => code)
+
+			if (InverseDirection[code] !== direction && !isKeyDown) {
+				setDirection(() => code)
+				setIsKeyDown(() => true)
+			}
 		},
-		[direction]
+		[direction, isKeyDown]
 	)
 
-	const setGameOver = (snake: number[][]) => {
-		if (snake.length <= START_LENGTH_SNAKE) {
-			return
-		}
+	const setGameOver = useCallback(
+		(snake: Snake) => {
+			if (snake.length <= START_LENGTH_SNAKE) {
+				return
+			}
 
-		const lastIndex = snake.length - 1
-		const [headX, headY] = snake[lastIndex]
-		const collision = snake
-			.slice(0, lastIndex)
-			.some(([x, y]) => headX === x && headY === y)
+			const lastIndex = snake.length - 1
+			const [headX, headY] = snake[lastIndex]
+			const collision = snake
+				.slice(0, lastIndex)
+				.some(([x, y]) => headX === x && headY === y)
 
-		if (collision) {
-			onChangeStatus(Status.Stop)
-		}
-	}
+			if (collision) {
+				return onChangeStatus(Status.Stop)
+			}
+		},
+		[onChangeStatus]
+	)
 
 	const setGameAgain = () => {
 		setSnake(() => INITIAL_SNAKE)
 		setDirection(() => Direction.Bottom)
 		onChangeStatus(Status.Playing)
 	}
-
-	useEffect(() => {
-		setEat(setRandomPosition(snake))
-	}, [])
 
 	useEffect(() => {
 		document.addEventListener('keydown', changeDirection)
@@ -74,29 +76,26 @@ export function Board({ status, onChangeStatus }: BoardProps) {
 		const [newSnake] = gameLoop(snake, eat, direction)
 		setGameOver(newSnake)
 
-		if (eatFood()) {
+		if (eatFood(snake, eat)) {
 			setEat(setRandomPosition(snake))
 		}
 
 		if (status === Status.Playing) {
 			const timer = setTimeout(() => {
-				setSnake(newSnake)
+				setIsKeyDown(() => false)
+				setSnake(() => newSnake)
 			}, TIMER)
 
 			return () => clearInterval(timer)
 		}
-	}, [snake, status])
+	}, [direction, eat, setGameOver, snake, status])
 
 	const score = snake.length - START_LENGTH_SNAKE
 
 	return (
 		<main className='main'>
 			<Dialog status={status} setGameAgain={setGameAgain} score={score} />
-			<div className={styles.boardHeader}>
-				<span className={styles.score}>
-					<b>Очки: {score} </b>
-				</span>
-			</div>
+			<BoardHeader score={score} />
 			<div className={styles.board}>
 				{BOARD_MATRIX.map((row, rowIdx) => (
 					<RowBoard

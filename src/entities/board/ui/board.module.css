@@ -5,18 +5,3 @@
 	border-radius: 6px;
 	padding: 6px;
 }
-
-.boardHeader {
-	display: flex;
-	align-content: center;
-	justify-content: space-between;
-	padding: 6px;
-}
-
-.score,
-.best-score {
-	margin: 0;
-	font-size: 30px;
-	color: var(--bg-color);
-	text-shadow: 0px 0px 3px var(--snake-color);
-}

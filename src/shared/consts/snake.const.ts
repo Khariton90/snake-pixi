@@ -1,9 +1,9 @@
-import { Direction } from '../types'
+import { Direction, Snake } from '../types'
 import { BOARD_CENTER } from './board.const'
 
 export const START_LENGTH_SNAKE = 3
 
-export const INITIAL_SNAKE = Array.from(
+export const INITIAL_SNAKE: Snake = Array.from(
 	Array(START_LENGTH_SNAKE),
 	(_, index) => [BOARD_CENTER + index, BOARD_CENTER]
 )

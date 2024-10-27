@@ -1,9 +1,9 @@
 import { memo } from 'react'
-import { CellEnum } from '@/shared/types'
+import { CellEnum, Snake } from '@/shared/types'
 import { CellBoard } from '@/entities/cell-board'
 import './row-board.css'
 
-function checkCell(eat: number[], snake: number[][], row: number, col: number) {
+function checkCell(eat: number[], snake: Snake, row: number, col: number) {
 	let type = eat[0] === row && eat[1] === col && CellEnum.Eat
 
 	if (type) {
@@ -22,7 +22,7 @@ function checkCell(eat: number[], snake: number[][], row: number, col: number) {
 type RowCellProps = {
 	row: number[]
 	index: number
-	snake: number[][]
+	snake: Snake
 	eat: number[]
 }
 
